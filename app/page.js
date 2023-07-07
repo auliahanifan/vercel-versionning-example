@@ -7,7 +7,9 @@ export default function Home() {
       <div className={styles.description}>
         <p>
           {`Currently this web app is version :`}&nbsp;
-          <code className={styles.code}>VERSION_TAG</code>
+          <a href="https://github.com/auliahanifan/vercel-versionning-example/releases/tag/VERSION_TAG">
+            <code className={styles.code}>VERSION_TAG</code>
+          </a>
         </p>
         <div>
           <a
