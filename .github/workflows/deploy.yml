@@ -15,21 +15,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      # Prepare
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      # Replace Version Tag
       - name: Get the version
         id: get_version
         run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
-
       - uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "VERSION_TAG"
           replace: "${{ env.VERSION }}"
           include: "app/page.js" # Do not modify Python files
 
+      # Deploy to Vercel
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
